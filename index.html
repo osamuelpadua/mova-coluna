@@ -1041,54 +1041,58 @@ window.addEventListener('load', function() {
     '.elementor-element-588430d .swiper-slide-image'
   ).forEach(function (img) { img.decoding = 'sync'; });
 
-  /* Inicializa o carousel e wira as setas manualmente via slideNext/slidePrev
-     (mais confiável que a navegação interna do Swiper quando loop:true) */
-  function initCarousel(selector, config) {
+  function initCarousel(selector, perView, perGroup, autoplayDelay) {
     var root = document.querySelector(selector);
     var el   = root ? root.querySelector('.swiper') : null;
     if (!el) return;
-    if (el.swiper) { el.swiper.destroy(true, true); }
 
-    config.navigation  = false;   /* navegação manual abaixo */
-    config.pagination.el = root.querySelector('.swiper-pagination');
+    /* Destroi instância prévia (Elementor ou nossa) sem exceção */
+    try { if (el.swiper) el.swiper.destroy(true, true); } catch(e) {}
 
-    var sw = new Swiper(el, config);
+    var pgEl = root.querySelector('.swiper-pagination');
 
-    var btnNext = root.querySelector('.elementor-swiper-button-next');
-    var btnPrev = root.querySelector('.elementor-swiper-button-prev');
-    if (btnNext) btnNext.addEventListener('click', function () { sw.slideNext(); });
-    if (btnPrev) btnPrev.addEventListener('click', function () { sw.slidePrev(); });
+    new Swiper(el, {
+      loop:                 true,
+      loopAdditionalSlides: perView * 2,
+      loopPreventsSlide:    false,   /* permite clique mesmo durante animação */
+      slidesPerView:        perView,
+      slidesPerGroup:       1,
+      spaceBetween:         16,
+      speed:                750,
+      cssEase:              'cubic-bezier(0.4, 0, 0.2, 1)',
+      grabCursor:           true,
+      navigation:           false,
+      watchSlidesProgress:  true,
+      autoplay: {
+        delay:                autoplayDelay,
+        disableOnInteraction: false,
+        pauseOnMouseEnter:    true,
+      },
+      pagination: pgEl ? {
+        el:             pgEl,
+        clickable:      true,
+        dynamicBullets: true,
+        dynamicMainBullets: 3,
+      } : false,
+      breakpoints: {
+        0:    { slidesPerView: 1,        slidesPerGroup: 1 },
+        768:  { slidesPerView: Math.min(perView, 2), slidesPerGroup: 1 },
+        1025: { slidesPerView: perView,  slidesPerGroup: 1 },
+      },
+    });
+
+    /* Event delegation no root: lê el.swiper no momento do clique
+       — imune a re-inicializações posteriores do Elementor */
+    root.addEventListener('click', function (e) {
+      var sw = el.swiper;
+      if (!sw) return;
+      if (e.target.closest('.elementor-swiper-button-next')) sw.slideNext();
+      if (e.target.closest('.elementor-swiper-button-prev')) sw.slidePrev();
+    });
   }
 
-  var sharedOptions = {
-    loop: true,
-    loopAdditionalSlides: 4,
-    speed: 800,
-    cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
-    grabCursor: true,
-    /* observer removido: com loop:true ele re-inicializa o Swiper a cada
-       mudança de DOM dos slides, desconectando os handlers das setas */
-    watchSlidesProgress: true,
-  };
-
-  var paginationOpts = {
-    clickable: true,
-    dynamicBullets: true,
-    dynamicMainBullets: 3,
-  };
-
-  initCarousel('.elementor-element-5e6b461a', Object.assign({}, sharedOptions, {
-    slidesPerView: 4, slidesPerGroup: 1, spaceBetween: 16,
-    autoplay: { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true },
-    pagination: Object.assign({}, paginationOpts),
-    breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 1 }, 1025: { slidesPerView: 4, slidesPerGroup: 1 } }
-  }));
-  initCarousel('.elementor-element-588430d', Object.assign({}, sharedOptions, {
-    slidesPerView: 3, slidesPerGroup: 1, spaceBetween: 16,
-    autoplay: { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true },
-    pagination: Object.assign({}, paginationOpts),
-    breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 1 }, 1025: { slidesPerView: 3, slidesPerGroup: 1 } }
-  }));
+  initCarousel('.elementor-element-5e6b461a', 4, 1, 4500);
+  initCarousel('.elementor-element-588430d',  3, 1, 4500);
 
   // Abrir vídeo no YouTube em nova aba
   (function() {
