@@ -92,10 +92,13 @@ body {
   background: #EEF6F9;
 }
 
-.lk-logo {
-  height: 60px;
-  width: auto;
-  filter: drop-shadow(0 2px 8px rgba(36, 99, 142, 0.14));
+.lk-name {
+  font-family: 'Cairo', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a3a52;
+  line-height: 1.1;
+  margin: 0;
 }
 
 .lk-bio {
