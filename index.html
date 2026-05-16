@@ -1049,6 +1049,7 @@ window.addEventListener('load', function() {
 
   var sharedOptions = {
     loop: true,
+    loopAdditionalSlides: 4,   /* clones extras para loop suave com vários slides visíveis */
     speed: 800,
     cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
     grabCursor: true,
@@ -1065,7 +1066,12 @@ window.addEventListener('load', function() {
       nextEl: '.elementor-element-5e6b461a .elementor-swiper-button-next',
       prevEl: '.elementor-element-5e6b461a .elementor-swiper-button-prev'
     },
-    pagination: { el: '.elementor-element-5e6b461a .swiper-pagination', clickable: true },
+    pagination: {
+      el: '.elementor-element-5e6b461a .swiper-pagination',
+      clickable: true,
+      dynamicBullets: true,
+      dynamicMainBullets: 3,
+    },
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 1 }, 1025: { slidesPerView: 4, slidesPerGroup: 1 } }
   }));
   initCarousel('.elementor-element-588430d', Object.assign({}, sharedOptions, {
@@ -1075,7 +1081,12 @@ window.addEventListener('load', function() {
       nextEl: '.elementor-element-588430d .elementor-swiper-button-next',
       prevEl: '.elementor-element-588430d .elementor-swiper-button-prev'
     },
-    pagination: { el: '.elementor-element-588430d .swiper-pagination', clickable: true },
+    pagination: {
+      el: '.elementor-element-588430d .swiper-pagination',
+      clickable: true,
+      dynamicBullets: true,
+      dynamicMainBullets: 3,
+    },
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 1 }, 1025: { slidesPerView: 3, slidesPerGroup: 1 } }
   }));
 
