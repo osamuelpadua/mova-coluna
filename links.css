@@ -69,6 +69,10 @@ body {
   animation: lk-fadeDown 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
 }
 
+.lk-header .lk-bio {
+  margin-top: -10px;
+}
+
 .lk-avatar-wrap {
   width: 124px;
   height: 124px;
@@ -94,7 +98,7 @@ body {
 
 .lk-name {
   font-family: 'Cairo', sans-serif;
-  font-size: 35px;
+  font-size: 36px;
   font-weight: 700;
   color: #24638E;
   letter-spacing: -0.02em;
@@ -107,7 +111,7 @@ body {
   font-size: 15px;
   font-weight: 600;
   line-height: 1.65;
-  color: rgba(36, 99, 142, 0.88);
+  color: #6b8a9e;
   text-align: center;
   max-width: 300px;
 }
