@@ -1,0 +1,352 @@
+/* ===== LINKS PAGE — Mova Coluna ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #EEF6F9;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #0d2d3e;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Barra de topo com gradiente animado */
+.lk-topbar {
+  height: 6px;
+  background: linear-gradient(90deg, #24638E, #00AC8D, #00C49A, #00AC8D, #24638E);
+  background-size: 300% 100%;
+  animation: lk-bar-shift 7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes lk-bar-shift {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 300% 0%; }
+}
+
+.lk-main {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 56px 20px 80px;
+  overflow: hidden;
+}
+
+/* Grain suave */
+.lk-grain {
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lk-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+}
+
+/* ===== HEADER ===== */
+.lk-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  animation: lk-fadeDown 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.05s forwards;
+}
+
+.lk-avatar-wrap {
+  width: 124px;
+  height: 124px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 196, 154, 0.35), rgba(36, 99, 142, 0.35));
+  padding: 5px;
+  box-shadow: 0 4px 24px rgba(36, 99, 142, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.lk-avatar {
+  width: 114px;
+  height: 114px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  background: #EEF6F9;
+}
+
+.lk-logo {
+  height: 60px;
+  width: auto;
+  filter: drop-shadow(0 2px 8px rgba(36, 99, 142, 0.14));
+}
+
+.lk-bio {
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.65;
+  color: rgba(36, 99, 142, 0.68);
+  text-align: center;
+  max-width: 300px;
+}
+
+/* ===== CARDS ===== */
+.lk-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.lk-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(36, 99, 142, 0.1);
+  box-shadow: 0 2px 16px rgba(36, 99, 142, 0.06);
+  text-decoration: none;
+  cursor: pointer;
+  opacity: 0;
+  animation: lk-fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--lk-delay, 0.2s) forwards;
+  transition: background 0.22s, transform 0.22s, box-shadow 0.22s, border-color 0.22s;
+}
+
+.lk-card:nth-child(1) { --lk-delay: 0.18s; }
+.lk-card:nth-child(2) { --lk-delay: 0.28s; }
+.lk-card:nth-child(3) { --lk-delay: 0.38s; }
+.lk-card:nth-child(4) { --lk-delay: 0.48s; }
+
+.lk-card:hover {
+  background: #f0f8fb;
+  border-color: rgba(36, 99, 142, 0.22);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(36, 99, 142, 0.12);
+}
+
+/* Card primário — Consulta Online (teal vivo) */
+.lk-card--primary {
+  background: linear-gradient(135deg, #00C49A, #00AC8D, #009e80, #00AC8D, #00C49A);
+  background-size: 400% 400%;
+  animation:
+    lk-fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--lk-delay, 0.18s) forwards,
+    cta-gradient 10s linear calc(var(--lk-delay, 0.18s) + 0.55s) infinite;
+  border-color: transparent;
+  box-shadow: 0 6px 28px rgba(0, 172, 141, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.lk-card--primary::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -60%;
+  width: 35%; height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.22), transparent);
+  transform: skewX(-18deg);
+  animation: btn-shine 5s ease-in-out 1s infinite;
+  pointer-events: none;
+}
+
+.lk-card--primary:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 14px 44px rgba(0, 172, 141, 0.38);
+  border-color: transparent;
+}
+
+/* Card secundário — Consulta Presencial (azul-teal escuro) */
+.lk-card--secondary {
+  background: linear-gradient(135deg, #2d7ab0, #24638E, #1a4d72, #24638E, #2d7ab0);
+  background-size: 400% 400%;
+  animation:
+    lk-fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--lk-delay, 0.18s) forwards,
+    cta-gradient 10s linear calc(var(--lk-delay, 0.18s) + 0.55s) infinite;
+  border-color: transparent;
+  box-shadow: 0 6px 28px rgba(36, 99, 142, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.lk-card--secondary::after {
+  content: '';
+  position: absolute;
+  top: -50%; left: -60%;
+  width: 35%; height: 200%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.18), transparent);
+  transform: skewX(-18deg);
+  animation: btn-shine 6s ease-in-out 2s infinite;
+  pointer-events: none;
+}
+
+.lk-card--secondary:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 14px 44px rgba(36, 99, 142, 0.42);
+  border-color: transparent;
+}
+
+/* Ícone circular */
+.lk-icon {
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #24638E, #00AC8D);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.22s;
+}
+
+.lk-card:hover .lk-icon { transform: scale(1.07); }
+
+.lk-card--primary .lk-icon {
+  background: rgba(255,255,255,0.22);
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.lk-card--secondary .lk-icon {
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.26);
+}
+
+/* Texto */
+.lk-card-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.lk-card-title {
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #0d2d3e;
+  line-height: 1.2;
+}
+
+.lk-card-desc {
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(36, 99, 142, 0.62);
+  line-height: 1.35;
+}
+
+.lk-card--primary .lk-card-title,
+.lk-card--secondary .lk-card-title { color: #ffffff; }
+
+.lk-card--primary .lk-card-desc  { color: rgba(255,255,255,0.8); }
+.lk-card--secondary .lk-card-desc { color: rgba(255,255,255,0.74); }
+
+/* Seta */
+.lk-arrow {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  transition: transform 0.22s;
+}
+
+.lk-arrow svg path { stroke: #24638E; }
+
+.lk-card--primary .lk-arrow svg path,
+.lk-card--secondary .lk-arrow svg path { stroke: rgba(255,255,255,0.7); }
+
+.lk-card:hover .lk-arrow { transform: translateX(4px); }
+
+.lk-card--primary:hover .lk-arrow svg path,
+.lk-card--secondary:hover .lk-arrow svg path { stroke: #ffffff; }
+
+/* ===== KEYFRAMES ===== */
+@keyframes lk-fadeDown {
+  from { opacity: 0; transform: translateY(-22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes lk-fadeUp {
+  from { opacity: 0; transform: translateY(26px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cta-gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+@keyframes btn-shine {
+  0%   { left: -60%; }
+  30%  { left: 110%; }
+  100% { left: 110%; }
+}
+
+/* ===== FOOTER ===== */
+.lk-footer {
+  background: #24638E;
+  flex-shrink: 0;
+}
+
+.lk-footer-inner {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lk-footer-credit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  opacity: 0.88;
+  transition: opacity 0.2s;
+}
+
+.lk-footer-credit:hover { opacity: 1; }
+
+.lk-footer-credit-text {
+  font-family: 'Cairo', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.88);
+  white-space: nowrap;
+}
+
+.lk-footer-credit-logo {
+  height: 22px;
+  width: auto;
+  display: block;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 480px) {
+  .lk-main { padding: 40px 16px 64px; }
+  .lk-logo { height: 50px; }
+  .lk-card { padding: 16px; gap: 14px; }
+  .lk-icon { width: 44px; height: 44px; }
+  .lk-card-title { font-size: 15px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lk-topbar { animation: none; }
+  .lk-header, .lk-card { opacity: 1; animation: none; }
+}
