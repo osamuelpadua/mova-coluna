@@ -1108,5 +1108,78 @@ window.addEventListener('load', function() {
   })();
 });
 </script>
+<!-- ======================== FOOTER ======================== -->
+<footer class="mc-footer">
+  <div class="mc-footer-grain"></div>
+  <div class="mc-footer-inner">
+    <p class="mc-footer-copy">© 2026 - Mova Coluna. Todos os direitos reservados.</p>
+    <a href="https://samuelpadua.com.br/" class="mc-footer-credit" target="_blank" rel="noopener" aria-label="Design e Desenvolvimento por Samuel Pádua Web Designer">
+      <span class="mc-footer-credit-text">Design e Desenvolvimento:</span>
+      <img src="logo-samuel.svg" alt="Samuel Pádua Web Designer" class="mc-footer-credit-logo">
+    </a>
+  </div>
+</footer>
+<!-- ======================== /FOOTER ======================== -->
+
+<script>
+/* === SCROLL REVEAL MC === */
+(function () {
+  'use strict';
+  if (!('IntersectionObserver' in window)) return;
+
+  var items = [];
+
+  function register(el, effect, delay) {
+    el.classList.add('mc-reveal');
+    el.setAttribute('data-reveal', effect || 'up');
+    if (delay) el.style.setProperty('--rv-delay', delay + 'ms');
+    items.push(el);
+  }
+
+  /* Seções nomeadas — anima colunas diretas com efeito esquerda/direita ou subida */
+  var sectionIds = [
+    '#section1', '#sobre-nos', '#a-clinica', '#tratamento',
+    '#depoimentos', '#faq', '#contato'
+  ];
+
+  sectionIds.forEach(function (sel) {
+    var section = document.querySelector(sel);
+    if (!section) return;
+
+    var cols = Array.from(
+      section.querySelectorAll(':scope > .elementor-container > .elementor-column')
+    );
+
+    if (!cols.length) {
+      var container = section.querySelector('.elementor-container');
+      if (container) register(container, 'up', 0);
+      return;
+    }
+
+    var effects = cols.length >= 2 ? ['left', 'right'] : ['up'];
+    cols.forEach(function (col, i) {
+      register(col, effects[Math.min(i, effects.length - 1)], i * 80);
+    });
+  });
+
+  /* Seções top-level sem ID */
+  ['4d33e075', '5fc86406', '5261cc7', 'f2cd2de'].forEach(function (id) {
+    var section = document.querySelector('[data-id="' + id + '"]');
+    if (!section) return;
+    var container = section.querySelector(':scope > .elementor-container');
+    if (container) register(container, 'up', 0);
+  });
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('mc-visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+
+  items.forEach(function (el) { observer.observe(el); });
+})();
+</script>
 </body>
 </html>
