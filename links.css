@@ -94,9 +94,10 @@ body {
 
 .lk-name {
   font-family: 'Cairo', sans-serif;
-  font-size: 32px;
+  font-size: 35px;
   font-weight: 700;
-  color: #1a3a52;
+  color: #24638E;
+  letter-spacing: -0.02em;
   line-height: 1.1;
   margin: 0;
 }
