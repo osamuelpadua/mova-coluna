@@ -1041,19 +1041,23 @@ window.addEventListener('load', function() {
     '.elementor-element-588430d .swiper-slide-image'
   ).forEach(function (img) { img.decoding = 'sync'; });
 
-  /* Inicializa o carousel: destrói instância anterior se houver,
-     e passa referências DOM diretas para navigation (evita falha com loop) */
+  /* Inicializa o carousel e wira as setas manualmente via slideNext/slidePrev
+     (mais confiável que a navegação interna do Swiper quando loop:true) */
   function initCarousel(selector, config) {
     var root = document.querySelector(selector);
     var el   = root ? root.querySelector('.swiper') : null;
     if (!el) return;
     if (el.swiper) { el.swiper.destroy(true, true); }
-    config.navigation = {
-      nextEl: root.querySelector('.elementor-swiper-button-next'),
-      prevEl: root.querySelector('.elementor-swiper-button-prev'),
-    };
+
+    config.navigation  = false;   /* navegação manual abaixo */
     config.pagination.el = root.querySelector('.swiper-pagination');
-    new Swiper(el, config);
+
+    var sw = new Swiper(el, config);
+
+    var btnNext = root.querySelector('.elementor-swiper-button-next');
+    var btnPrev = root.querySelector('.elementor-swiper-button-prev');
+    if (btnNext) btnNext.addEventListener('click', function () { sw.slideNext(); });
+    if (btnPrev) btnPrev.addEventListener('click', function () { sw.slidePrev(); });
   }
 
   var sharedOptions = {
