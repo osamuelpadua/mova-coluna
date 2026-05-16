@@ -1058,6 +1058,44 @@ window.addEventListener('load', function() {
     pagination: { el: '.elementor-element-588430d .swiper-pagination', clickable: true },
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 2 }, 1025: { slidesPerView: 3, slidesPerGroup: 3 } }
   });
+
+  // Lightbox da galeria
+  (function() {
+    var links = Array.from(document.querySelectorAll('.elementor-element-5e6b461a .swiper-slide a'));
+    if (!links.length) return;
+    var images = links.map(function(a) { return a.getAttribute('href'); });
+    var cur = 0;
+
+    var ov = document.createElement('div');
+    ov.id = 'mc-lb';
+    ov.innerHTML = '<div id="mc-lb-bg"></div><button id="mc-lb-close">&times;</button><button id="mc-lb-prev">&#8249;</button><img id="mc-lb-img" src="" alt=""><button id="mc-lb-next">&#8250;</button>';
+    document.body.appendChild(ov);
+
+    var s = document.createElement('style');
+    s.textContent = '#mc-lb{display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center}#mc-lb.active{display:flex}#mc-lb-bg{position:absolute;inset:0;background:rgba(0,0,0,.9);cursor:pointer}#mc-lb-img{position:relative;max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px;box-shadow:0 4px 32px rgba(0,0,0,.6)}#mc-lb-close{position:absolute;top:14px;right:20px;background:none;border:none;color:#fff;font-size:44px;cursor:pointer;z-index:1;line-height:1;opacity:.8}#mc-lb-close:hover{opacity:1}#mc-lb-prev,#mc-lb-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;font-size:52px;cursor:pointer;z-index:1;padding:6px 18px;border-radius:4px;line-height:1;transition:background .2s}#mc-lb-prev:hover,#mc-lb-next:hover{background:rgba(255,255,255,.3)}#mc-lb-prev{left:12px}#mc-lb-next{right:12px}';
+    document.head.appendChild(s);
+
+    function show(i) {
+      cur = (i + images.length) % images.length;
+      document.getElementById('mc-lb-img').src = images[cur];
+      ov.classList.add('active');
+    }
+    function hide() { ov.classList.remove('active'); }
+
+    links.forEach(function(a, i) {
+      a.addEventListener('click', function(e) { e.preventDefault(); show(i); });
+    });
+    document.getElementById('mc-lb-bg').addEventListener('click', hide);
+    document.getElementById('mc-lb-close').addEventListener('click', hide);
+    document.getElementById('mc-lb-prev').addEventListener('click', function() { show(cur - 1); });
+    document.getElementById('mc-lb-next').addEventListener('click', function() { show(cur + 1); });
+    document.addEventListener('keydown', function(e) {
+      if (!ov.classList.contains('active')) return;
+      if (e.key === 'Escape') hide();
+      if (e.key === 'ArrowLeft') show(cur - 1);
+      if (e.key === 'ArrowRight') show(cur + 1);
+    });
+  })();
 });
 </script>
 </body>
