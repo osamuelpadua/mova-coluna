@@ -1062,9 +1062,8 @@ window.addEventListener('load', function() {
     speed: 800,
     cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
     grabCursor: true,
-    observer: true,
-    observeParents: true,
-    observeSlideChildren: true,
+    /* observer removido: com loop:true ele re-inicializa o Swiper a cada
+       mudança de DOM dos slides, desconectando os handlers das setas */
     watchSlidesProgress: true,
   };
 
