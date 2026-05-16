@@ -14,7 +14,7 @@ body {
 /* Barra de topo com gradiente animado */
 .lk-topbar {
   height: 6px;
-  background: linear-gradient(90deg, #24638E, #00AC8D, #00C49A, #00AC8D, #24638E);
+  background: linear-gradient(90deg, #1a4d72, #24638E, #4BA3D3, #24638E, #1a4d72);
   background-size: 300% 100%;
   animation: lk-bar-shift 7s linear infinite;
   flex-shrink: 0;
@@ -73,7 +73,7 @@ body {
   width: 124px;
   height: 124px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(0, 196, 154, 0.35), rgba(36, 99, 142, 0.35));
+  background: linear-gradient(135deg, rgba(75, 163, 211, 0.4), rgba(36, 99, 142, 0.4));
   padding: 5px;
   box-shadow: 0 4px 24px rgba(36, 99, 142, 0.18);
   display: flex;
@@ -144,15 +144,15 @@ body {
   box-shadow: 0 8px 32px rgba(36, 99, 142, 0.12);
 }
 
-/* Card primário — Consulta Online (teal vivo) */
+/* Card primário — Consulta Online (azul claro) */
 .lk-card--primary {
-  background: linear-gradient(135deg, #00C49A, #00AC8D, #009e80, #00AC8D, #00C49A);
+  background: linear-gradient(135deg, #4BA3D3, #3a88bd, #2d7ab0, #3a88bd, #4BA3D3);
   background-size: 400% 400%;
   animation:
     lk-fadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--lk-delay, 0.18s) forwards,
     cta-gradient 10s linear calc(var(--lk-delay, 0.18s) + 0.55s) infinite;
   border-color: transparent;
-  box-shadow: 0 6px 28px rgba(0, 172, 141, 0.3);
+  box-shadow: 0 6px 28px rgba(45, 122, 176, 0.32);
   position: relative;
   overflow: hidden;
 }
@@ -170,7 +170,7 @@ body {
 
 .lk-card--primary:hover {
   transform: translateY(-3px) scale(1.01);
-  box-shadow: 0 14px 44px rgba(0, 172, 141, 0.38);
+  box-shadow: 0 14px 44px rgba(45, 122, 176, 0.42);
   border-color: transparent;
 }
 
@@ -208,7 +208,7 @@ body {
 .lk-icon {
   width: 50px; height: 50px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #24638E, #00AC8D);
+  background: linear-gradient(135deg, #24638E, #3a88bd);
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   transition: transform 0.22s;
