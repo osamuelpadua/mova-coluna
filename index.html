@@ -1041,15 +1041,24 @@ window.addEventListener('load', function() {
     '.elementor-element-588430d .swiper-slide-image'
   ).forEach(function (img) { img.decoding = 'sync'; });
 
+  /* Inicializa o carousel: destrói instância anterior se houver,
+     e passa referências DOM diretas para navigation (evita falha com loop) */
   function initCarousel(selector, config) {
-    var el = document.querySelector(selector + ' .swiper');
-    if (!el || el.classList.contains('swiper-initialized')) return;
+    var root = document.querySelector(selector);
+    var el   = root ? root.querySelector('.swiper') : null;
+    if (!el) return;
+    if (el.swiper) { el.swiper.destroy(true, true); }
+    config.navigation = {
+      nextEl: root.querySelector('.elementor-swiper-button-next'),
+      prevEl: root.querySelector('.elementor-swiper-button-prev'),
+    };
+    config.pagination.el = root.querySelector('.swiper-pagination');
     new Swiper(el, config);
   }
 
   var sharedOptions = {
     loop: true,
-    loopAdditionalSlides: 4,   /* clones extras para loop suave com vários slides visíveis */
+    loopAdditionalSlides: 4,
     speed: 800,
     cssEase: 'cubic-bezier(0.4, 0, 0.2, 1)',
     grabCursor: true,
@@ -1059,34 +1068,22 @@ window.addEventListener('load', function() {
     watchSlidesProgress: true,
   };
 
+  var paginationOpts = {
+    clickable: true,
+    dynamicBullets: true,
+    dynamicMainBullets: 3,
+  };
+
   initCarousel('.elementor-element-5e6b461a', Object.assign({}, sharedOptions, {
     slidesPerView: 4, slidesPerGroup: 1, spaceBetween: 16,
     autoplay: { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true },
-    navigation: {
-      nextEl: '.elementor-element-5e6b461a .elementor-swiper-button-next',
-      prevEl: '.elementor-element-5e6b461a .elementor-swiper-button-prev'
-    },
-    pagination: {
-      el: '.elementor-element-5e6b461a .swiper-pagination',
-      clickable: true,
-      dynamicBullets: true,
-      dynamicMainBullets: 3,
-    },
+    pagination: Object.assign({}, paginationOpts),
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 1 }, 1025: { slidesPerView: 4, slidesPerGroup: 1 } }
   }));
   initCarousel('.elementor-element-588430d', Object.assign({}, sharedOptions, {
     slidesPerView: 3, slidesPerGroup: 1, spaceBetween: 16,
     autoplay: { delay: 4500, disableOnInteraction: false, pauseOnMouseEnter: true },
-    navigation: {
-      nextEl: '.elementor-element-588430d .elementor-swiper-button-next',
-      prevEl: '.elementor-element-588430d .elementor-swiper-button-prev'
-    },
-    pagination: {
-      el: '.elementor-element-588430d .swiper-pagination',
-      clickable: true,
-      dynamicBullets: true,
-      dynamicMainBullets: 3,
-    },
+    pagination: Object.assign({}, paginationOpts),
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 1 }, 1025: { slidesPerView: 3, slidesPerGroup: 1 } }
   }));
 
