@@ -137,7 +137,7 @@ body {
 .lk-card:nth-child(3) { --lk-delay: 0.38s; }
 .lk-card:nth-child(4) { --lk-delay: 0.48s; }
 
-.lk-card:hover {
+.lk-card:not(.lk-card--primary):not(.lk-card--secondary):hover {
   background: #f0f8fb;
   border-color: rgba(36, 99, 142, 0.22);
   transform: translateY(-3px);
