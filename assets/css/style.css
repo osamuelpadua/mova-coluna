@@ -4593,29 +4593,124 @@ border-radius: 10px;
   }
 }
 
+/* ============================================================
+   MICRO-ANIMAÇÕES — MOVA COLUNA
+   ============================================================ */
+
+/* ── BOTÕES ────────────────────────────────────────────────── */
+.elementor-button {
+  transition:
+    transform    0.24s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow   0.24s ease,
+    filter       0.24s ease !important;
+  will-change: transform;
+}
+.elementor-button:hover {
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+  filter: brightness(1.07);
+}
+.elementor-button:active {
+  transform: scale(0.95) translateY(1px) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.14) !important;
+  filter: brightness(0.96) !important;
+  transition-duration: 0.08s !important;
+}
+
+/* ── FAQ ACCORDION ─────────────────────────────────────────── */
+/* Animação de altura do collapse (Bootstrap/ElementsKit) */
+.elementskit-accordion .collapsing {
+  transition: height 0.42s cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+/* Card hover lift */
+.elementskit-accordion .elementskit-card {
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.elementskit-accordion .elementskit-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.09);
+}
+/* Toggler hover */
+.elementskit-accordion .ekit-accordion--toggler {
+  transition: opacity 0.18s ease !important;
+}
+.elementskit-accordion .ekit-accordion--toggler:hover { opacity: 0.82; }
+/* Ícones: animação ao abrir/fechar */
+.elementskit-accordion .ekit_accordion_normal_icon,
+.elementskit-accordion .ekit_accordion_active_icon {
+  display: inline-block;
+  transition: transform 0.36s cubic-bezier(0.34, 1.4, 0.64, 1),
+              opacity  0.22s ease !important;
+}
+.elementskit-accordion .ekit-accordion--toggler:not(.collapsed) .ekit_accordion_normal_icon {
+  transform: rotate(45deg);
+  opacity: 0.6;
+}
+.elementskit-accordion .ekit-accordion--toggler:not(.collapsed) .ekit_accordion_active_icon {
+  transform: rotate(-15deg) scale(1.1);
+}
+
+/* ── CARROSSEIS ────────────────────────────────────────────── */
+/* Setas de navegação */
+.elementor-swiper-button {
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity   0.18s ease !important;
+  will-change: transform;
+}
+.elementor-swiper-button:hover  { transform: scale(1.18) !important; }
+.elementor-swiper-button:active {
+  transform: scale(0.88) !important;
+  transition-duration: 0.07s !important;
+}
+/* Pontos de paginação */
+.swiper-pagination-bullet {
+  transition: transform      0.26s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity        0.2s ease,
+              background-color 0.2s ease !important;
+}
+.swiper-pagination-bullet-active { transform: scale(1.4) !important; }
+/* Zoom suave na imagem ao hovear o slide */
+.elementor-element-5e6b461a .swiper-slide img,
+.elementor-element-588430d  .swiper-slide img {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
+}
+.elementor-element-5e6b461a .swiper-slide:hover img,
+.elementor-element-588430d  .swiper-slide:hover img {
+  transform: scale(1.05);
+}
+
 /* === SCROLL REVEAL MC === */
 .mc-reveal {
   --rv-x: 0px;
-  --rv-y: 32px;
+  --rv-y: 40px;
   --rv-scale: 1;
+  --rv-blur: 4px;
   opacity: 0;
+  filter: blur(var(--rv-blur));
   transform: translate3d(var(--rv-x), var(--rv-y), 0) scale(var(--rv-scale));
   transition:
-    opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity   0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter    0.9s cubic-bezier(0.16, 1, 0.3, 1);
   transition-delay: var(--rv-delay, 0ms);
-  will-change: opacity, transform;
+  will-change: opacity, transform, filter;
 }
-.mc-reveal[data-reveal="left"]  { --rv-x: -44px; --rv-y: 0px; }
-.mc-reveal[data-reveal="right"] { --rv-x:  44px; --rv-y: 0px; }
-.mc-reveal[data-reveal="up"]    { --rv-y: 36px; }
-.mc-reveal[data-reveal="zoom"]  { --rv-y: 18px; --rv-scale: 0.97; }
+.mc-reveal[data-reveal="left"]  { --rv-x: -52px; --rv-y: 0px; --rv-blur: 3px; }
+.mc-reveal[data-reveal="right"] { --rv-x:  52px; --rv-y: 0px; --rv-blur: 3px; }
+.mc-reveal[data-reveal="up"]    { --rv-y: 44px; }
+.mc-reveal[data-reveal="zoom"]  { --rv-y: 22px; --rv-scale: 0.96; --rv-blur: 5px; }
 .mc-reveal.mc-visible {
   opacity: 1;
+  filter: blur(0);
   transform: translate3d(0, 0, 0) scale(1);
 }
 @media (prefers-reduced-motion: reduce) {
-  .mc-reveal { transition: none !important; opacity: 1 !important; transform: none !important; }
+  .mc-reveal {
+    transition: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
 }
 
 /* Oculta o footer antigo do Elementor */

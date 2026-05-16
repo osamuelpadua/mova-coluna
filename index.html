@@ -1181,5 +1181,62 @@ window.addEventListener('load', function() {
   items.forEach(function (el) { observer.observe(el); });
 })();
 </script>
+
+<script>
+/* === FAQ — transição de altura suave (fallback nativo) === */
+(function () {
+  'use strict';
+
+  /* Aguarda ElementsKit montar o accordion */
+  window.addEventListener('load', function () {
+    var togglers = document.querySelectorAll('.ekit-accordion--toggler');
+    if (!togglers.length) return;
+
+    /* Garante que cada painel de resposta tem transition na altura */
+    document.querySelectorAll('.elementskit-card-body').forEach(function (body) {
+      body.style.overflow   = 'hidden';
+      body.style.transition = 'max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.38s ease';
+    });
+
+    /* Se Bootstrap collapse já estiver presente, apenas reforça o timing */
+    if (window.jQuery && window.jQuery.fn.collapse) {
+      window.jQuery('.elementskit-accordion').on('show.bs.collapse hide.bs.collapse', function () {
+        window.jQuery(this).find('.collapsing').css(
+          'transition', 'height 0.42s cubic-bezier(0.22, 1, 0.36, 1)'
+        );
+      });
+    }
+
+    /* Ripple leve no click do toggler */
+    togglers.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        var ripple = document.createElement('span');
+        ripple.style.cssText = [
+          'position:absolute', 'border-radius:50%',
+          'width:6px', 'height:6px',
+          'background:rgba(255,255,255,0.35)',
+          'transform:scale(0)',
+          'animation:mc-ripple 0.5s ease-out forwards',
+          'pointer-events:none',
+          'left:' + (e.offsetX - 3) + 'px',
+          'top:'  + (e.offsetY - 3) + 'px'
+        ].join(';');
+        btn.style.position = 'relative';
+        btn.style.overflow = 'hidden';
+        btn.appendChild(ripple);
+        setTimeout(function () { ripple.remove(); }, 550);
+      });
+    });
+
+    /* Keyframe do ripple via <style> inline (uma vez) */
+    if (!document.getElementById('mc-ripple-style')) {
+      var s = document.createElement('style');
+      s.id = 'mc-ripple-style';
+      s.textContent = '@keyframes mc-ripple{to{transform:scale(28);opacity:0}}';
+      document.head.appendChild(s);
+    }
+  });
+})();
+</script>
 </body>
 </html>
