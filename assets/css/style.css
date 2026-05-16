@@ -4667,6 +4667,24 @@ border-radius: 10px;
 .elementor-element-588430d  .swiper-slide:hover img {
   transform: scale(1.05);
 }
+/* Placeholder: slide nunca vira buraco enquanto imagem carrega */
+.elementor-element-5e6b461a .swiper-slide-inner,
+.elementor-element-588430d  .swiper-slide-inner {
+  display: block;
+  background-color: rgba(0,0,0,0.06);
+}
+.elementor-element-5e6b461a .swiper-slide-image {
+  display: block;
+  width: 100%;
+  min-height: 160px;
+  object-fit: cover;
+}
+.elementor-element-588430d .swiper-slide-image {
+  display: block;
+  width: 100%;
+  min-height: 200px;
+  object-fit: cover;
+}
 
 /* === SCROLL REVEAL MC === */
 .mc-reveal {

@@ -1033,14 +1033,32 @@ var ekit_config = {"ajaxurl":"/wp-admin/admin-ajax.php","nonce":"bd0a104b89"};
 	<script>
 window.addEventListener('load', function() {
   if (typeof Swiper === 'undefined') return;
+
+  /* Força decodificação síncrona nas imagens dos carrosseis
+     para evitar buracos ao navegar antes do frame ser pintado */
+  document.querySelectorAll(
+    '.elementor-element-5e6b461a .swiper-slide-image, ' +
+    '.elementor-element-588430d .swiper-slide-image'
+  ).forEach(function (img) { img.decoding = 'sync'; });
+
   function initCarousel(selector, config) {
     var el = document.querySelector(selector + ' .swiper');
     if (!el || el.classList.contains('swiper-initialized')) return;
     new Swiper(el, config);
   }
-  initCarousel('.elementor-element-5e6b461a', {
+
+  var sharedOptions = {
+    speed: 680,
+    cssEase: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+    /* Re-calcula ao detectar mudanças no DOM ou nas imagens */
+    observer: true,
+    observeParents: true,
+    observeSlideChildren: true,
+    watchSlidesProgress: true,
+  };
+
+  initCarousel('.elementor-element-5e6b461a', Object.assign({}, sharedOptions, {
     slidesPerView: 4, slidesPerGroup: 4, spaceBetween: 16,
-    speed: 680, cssEase: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     autoplay: { delay: 5000, disableOnInteraction: false },
     navigation: {
       nextEl: '.elementor-element-5e6b461a .elementor-swiper-button-next',
@@ -1048,10 +1066,9 @@ window.addEventListener('load', function() {
     },
     pagination: { el: '.elementor-element-5e6b461a .swiper-pagination', clickable: true },
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 2 }, 1025: { slidesPerView: 4, slidesPerGroup: 4 } }
-  });
-  initCarousel('.elementor-element-588430d', {
+  }));
+  initCarousel('.elementor-element-588430d', Object.assign({}, sharedOptions, {
     slidesPerView: 3, slidesPerGroup: 3, spaceBetween: 16,
-    speed: 680, cssEase: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
     autoplay: { delay: 5000, disableOnInteraction: false, pauseOnMouseEnter: true },
     navigation: {
       nextEl: '.elementor-element-588430d .elementor-swiper-button-next',
@@ -1059,7 +1076,7 @@ window.addEventListener('load', function() {
     },
     pagination: { el: '.elementor-element-588430d .swiper-pagination', clickable: true },
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 2 }, 1025: { slidesPerView: 3, slidesPerGroup: 3 } }
-  });
+  }));
 
   // Abrir vídeo no YouTube em nova aba
   (function() {
