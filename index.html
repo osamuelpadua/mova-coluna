@@ -1059,6 +1059,28 @@ window.addEventListener('load', function() {
     breakpoints: { 0: { slidesPerView: 1, slidesPerGroup: 1 }, 768: { slidesPerView: 2, slidesPerGroup: 2 }, 1025: { slidesPerView: 3, slidesPerGroup: 3 } }
   });
 
+  // Lightbox do vídeo
+  (function() {
+    var playBtn = document.querySelector('.elementor-element-4e69444 .elementor-custom-embed-image-overlay');
+    if (!playBtn) return;
+    var videoId = 'g92tnfje7-Y';
+    var vm = document.createElement('div');
+    vm.id = 'mc-vm';
+    vm.innerHTML = '<div id="mc-vm-bg"></div><div id="mc-vm-wrap"><iframe id="mc-vm-iframe" src="" frameborder="0" allow="autoplay;encrypted-media" allowfullscreen></iframe><button id="mc-vm-close">&times;</button></div>';
+    document.body.appendChild(vm);
+    var s = document.createElement('style');
+    s.textContent = '#mc-vm{display:none;position:fixed;inset:0;z-index:99999;align-items:center;justify-content:center}#mc-vm.active{display:flex}#mc-vm-bg{position:absolute;inset:0;background:rgba(0,0,0,.88);cursor:pointer}#mc-vm-wrap{position:relative;width:min(420px,90vw);z-index:1}#mc-vm-iframe{width:100%;aspect-ratio:9/16;border-radius:10px;display:block}#mc-vm-close{position:absolute;top:-14px;right:-14px;width:32px;height:32px;border-radius:50%;background:#fff;border:none;font-size:20px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}';
+    document.head.appendChild(s);
+    var iframe = document.getElementById('mc-vm-iframe');
+    function openVM() { iframe.src = 'https://www.youtube-nocookie.com/embed/' + videoId + '?autoplay=1&rel=0'; vm.classList.add('active'); }
+    function closeVM() { iframe.src = ''; vm.classList.remove('active'); }
+    playBtn.style.cursor = 'pointer';
+    playBtn.addEventListener('click', openVM);
+    document.getElementById('mc-vm-bg').addEventListener('click', closeVM);
+    document.getElementById('mc-vm-close').addEventListener('click', closeVM);
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeVM(); });
+  })();
+
   // Lightbox da galeria
   (function() {
     var links = Array.from(document.querySelectorAll('.elementor-element-5e6b461a .swiper-slide a'));
