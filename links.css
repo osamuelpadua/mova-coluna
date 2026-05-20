@@ -73,6 +73,12 @@ body {
   margin-top: -10px;
 }
 
+.lk-logo {
+  height: 72px;
+  width: auto;
+  display: block;
+}
+
 .lk-avatar-wrap {
   width: 124px;
   height: 124px;
