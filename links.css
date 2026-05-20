@@ -359,7 +359,7 @@ body {
 /* ===== RESPONSIVO ===== */
 @media (max-width: 480px) {
   .lk-main { padding: 40px 16px 64px; }
-  .lk-logo { height: 50px; }
+  .lk-logo { height: 130px; }
   .lk-card { padding: 16px; gap: 14px; }
   .lk-icon { width: 44px; height: 44px; }
   .lk-card-title { font-size: 15px; }
