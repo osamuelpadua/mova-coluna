@@ -31,7 +31,7 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 56px 20px 80px;
+  padding: 56px 20px 120px;
   overflow: hidden;
 }
 
@@ -315,6 +315,11 @@ body {
 .lk-footer {
   background: #24638E;
   flex-shrink: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
 }
 
 .lk-footer-inner {
